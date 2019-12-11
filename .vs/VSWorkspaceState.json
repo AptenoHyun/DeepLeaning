@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\DeepLenaing",
+    "\\DeepLenaing\\Debug",
+    "\\DeepLenaing\\DeepLenaing"
   ],
+  "SelectedNode": "\\DeepLenaing\\DeepLenaing.sln",
   "PreviewInSolutionExplorer": false
 }
