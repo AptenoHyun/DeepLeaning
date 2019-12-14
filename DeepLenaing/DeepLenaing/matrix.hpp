@@ -1,31 +1,60 @@
 #pragma once
-#include <array>
+#include <valarray>
 #include <vector>
 
-template <typename T, int width, int height>
-class CMatrix : std::array<std::array<T, width>, height>
+template <typename T>
+class CMatrix
 {
 public:
-	CMatrix CMatrix::operator*(const CMatrix& cMatrix) override{
-		CMatrix<decltype(this[0][0]), this->size(), cMatrix[0].size()> cDotMatrix;
-		
-		for (int i = 0; i < this->size(); i++)
+	CMatrix(size_t width, size_t height)
+	{
+		m_matrix.resize(width);
+		for (size_t i = 0; i < width; i++)
 		{
-			for (int j = 0; j < cMatrix[0].size(); j++)
+			m_matrix[i] = std::valarray<T>( height );
+		}
+	}
+
+	size_t size()
+	{
+		return m_matrix.size();
+	}
+
+	std::valarray<T> & operator[](const unsigned int idx)
+	{
+		return m_matrix[idx];
+	}
+
+	const std::valarray<T> & operator[](const unsigned int idx) const
+	{
+		return m_matrix[idx];
+	}
+
+	CMatrix<T> operator*(const CMatrix<T>& cMatrix){
+		CMatrix<T> cDotMatrix{ m_matrix.size(), cMatrix[0].size()};
+		
+		for (size_t i = 0; i < m_matrix.size(); i++)
+		{
+			for (size_t j = 0; j < cMatrix[0].size(); j++)
 			{
-				decltype(this[0][0]) value = 0;
-				for (int k = 0; k < this[0].size(); k++)
+				T value = 0;
+				for (size_t k = 0; k < m_matrix[0].size(); k++)
 				{
-					value += this[i][k] * cMatrix[k][j];
+					value += m_matrix[i][k] * cMatrix[k][j];
 				}
 				cDotMatrix[i][j] = value;
+				//std::cout << value << "\t";
 			}
+			//std::cout << std::endl;
 		}
 		
 		return cDotMatrix;
 	}
-
-	CMatrix & CMatrix::operator*=(const CMatrix& cMatrix) override {
-		return (*this = *this * cMatrix);
+	CMatrix<T> & operator*=(const CMatrix<T> & cMatrix) {
+		*this = std::move(*this * cMatrix);
+		return *this;
 	}
+
+private:
+	std::valarray<std::valarray<T>> m_matrix;
 };

@@ -6,7 +6,9 @@
 
 int main()
 {
-	CNode<2, 3> cNode;
+	CNode<2, 3> cNode1;
+	CNode<3, 2> cNode2;
+	cNode1.m_WeightList *= cNode2.m_WeightList;
 }
 
 // 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
