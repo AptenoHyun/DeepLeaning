@@ -3,7 +3,7 @@
 #include <random>
 #include <iostream>
 
-template<size_t width, size_t height>
+template<size_t width, size_t height, typename T = double>
 class CNode
 {
 public:
@@ -29,6 +29,10 @@ public:
 
 	~CNode() {}
 
-//private:
-	CMatrix<double> m_WeightList{ width, height };
+	CMatrix<T> && GetOutPut(CMatrix<T>& CMatrix)
+	{
+		return m_WeightList * CMatrix;
+	}
+private:
+	CMatrix<T> m_WeightList{ width, height };
 };

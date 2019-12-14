@@ -31,6 +31,13 @@ public:
 	}
 
 	CMatrix<T> operator*(const CMatrix<T>& cMatrix){
+
+		if (m_matrix[0].size() != cMatrix.size())
+		{
+			std::string strErr = m_matrix[0].size() + " X " + cMatrix.size() + " Matrix Length MissMatch";
+			throw std::out_of_range(strErr);
+		}
+
 		CMatrix<T> cDotMatrix{ m_matrix.size(), cMatrix[0].size()};
 		
 		for (size_t i = 0; i < m_matrix.size(); i++)
